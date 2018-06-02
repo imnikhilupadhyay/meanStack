@@ -24,4 +24,12 @@ Setup Dependencies
 -bower i toaster --save
 -bower i jquery --save
 -bower i angular-route angular --save
+
+
+-Download Heroku
+-make procfile as file as web routing
+-make a mLab -> AWS -> sandbox account
+-copy the connection string
+
+
 ```
