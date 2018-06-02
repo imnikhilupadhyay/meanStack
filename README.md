@@ -28,8 +28,20 @@ Setup Dependencies
 
 -Download Heroku
 -make procfile as file as web routing
--make a mLab -> AWS -> sandbox account
--copy the connection string
 
+mLab Setup
+-make a mLab -> AWS -> sandbox account
+-create user
+-copy the connection string and paste in vscode
+-copy the string paste in :bash
+
+
+
+Heroku Setup
+-heroku login
+-heroku create
+-heroku config:set NODE-ENV=production --app <appname>
+-git push heroku master
+-heroku ps:scale web=1 --app <appname> // it will allocate some resources to heroku to run
 
 ```

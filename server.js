@@ -26,11 +26,6 @@ app.use(logger('dev'));
 
 app.use(express.static(path.join(__dirname+'/public')));
 
-app.get('/partials/:partialPath',(req,res)=> {
-  res.render('partials/'+ req.params.partialPath)
-});
-
-
 app.use(stylus.middleware(
   {
    src: __dirname + '/public', // .styl files are located in public
@@ -43,33 +38,37 @@ app.use(stylus.middleware(
  }else{
    mongoose.connect('mongodb://nikhilDev:multivision1@ds127589.mlab.com:27589/multivision');
  }
+
  var db = mongoose.connection;
  db.on('error', console.error.bind(console, 'connection error...'));
  db.once('open', function callback() {
      console.log('multivision db opened');
  });
  
- var messageSchema = mongoose.Schema
-  ({
-    message: String
-  });
+//  var messageSchema = mongoose.Schema
+//   ({
+//     message: String
+//   });
 
- var Message = mongoose.model('Message', messageSchema);
- var mongoMessage= new Message
-  ({
-    message: 'Hello mongoDB here'
-  });
+//  var Message = mongoose.model('Message', messageSchema);
+//  var mongoMessage= new Message
+//   ({
+//     message: 'Hello mongoDB here'
+//   });
 
- mongoMessage.save(function(err, doc) {
-  Message.findOne().exec(function(err, messageDoc) {
-      mongoMessage = messageDoc.message;
+
+  app.get('/partials/:partialPath',(req,res)=> {
+    res.render('partials/'+ req.params.partialPath)
   });
-});
+  
+//  mongoMessage.save(function(err, doc) {
+//   Message.findOne().exec(function(err, messageDoc) {
+//       mongoMessage = messageDoc.message;
+//   });
+// });
  
  app.get('*', function(req, res) {
-     res.render('index', {
-         mongoMessage: mongoMessage
-     });
+     res.render('index');
  });
 
 app.set('port',process.env.PORT || 3000); // handling non static port variable
