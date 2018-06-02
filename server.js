@@ -1,50 +1,51 @@
 var express = require('express');
 var path = require('path');
 var jade = require('jade');
-var bodyParser=require('body-parser');
-var logger = require('morgan');
-var stylus=require('stylus');
 var mongoose = require('mongoose');
-
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var app = express();
 
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+var config = require('./server/config/config')[env];
 
-function compile(str, path) {
- return stylus(str).set('filename',path);
-}
+require('./server/config/express')(app,config);
+require('./server/config/mongoose')(config);
+require('./server/config/routes')(app);
 
-app.use(bodyParser.urlencoded({extended : true})); // to allow nested object extented is set true
+var User= mongoose.model('User');
+passport.use(new LocalStrategy(
+  (username,password,done)=> {
+      User.findOne({username:username}).exec((err,user)=> {
+        if(user){
+          return done(null,user);
+        }else{
+          return done(null,false);
+        }
+      })
+  }
+));
 
-app.use(bodyParser.json());// to catch incoming data
+passport.serializeUser((user,done)=> {
+  if(user){
+    return done(null,user._id);
+  }
+});
+
+passport.deserializeUser((id,done)=> {
+    User.findOne({_id:id}).exec((err,user)=> {
+      if(user){
+        return done(null,user);
+      } else{
+        return done(null,false);
+      }
+    })
+})
+
+app.listen(config.port);
+  console.log("Listening to "+ config.port +" port!!");
 
 //app.engine('html', require('ejs').renderFile);
-app.set('views',__dirname + '/server/views');
-app.set('view engine', 'jade');
-app.use(logger('dev'));
-
-
-app.use(express.static(path.join(__dirname+'/public')));
-
-app.use(stylus.middleware(
-  {
-   src: __dirname + '/public', // .styl files are located in public
-   compile : compile
-  }
- ))
- 
- if(env === 'development'){
- mongoose.connect('mongodb://localhost/multivision');
- }else{
-   mongoose.connect('mongodb://nikhilDev:multivision1@ds127589.mlab.com:27589/multivision');
- }
-
- var db = mongoose.connection;
- db.on('error', console.error.bind(console, 'connection error...'));
- db.once('open', function callback() {
-     console.log('multivision db opened');
- });
- 
 //  var messageSchema = mongoose.Schema
 //   ({
 //     message: String
@@ -55,24 +56,8 @@ app.use(stylus.middleware(
 //   ({
 //     message: 'Hello mongoDB here'
 //   });
-
-
-  app.get('/partials/:partialPath',(req,res)=> {
-    res.render('partials/'+ req.params.partialPath)
-  });
-  
 //  mongoMessage.save(function(err, doc) {
 //   Message.findOne().exec(function(err, messageDoc) {
 //       mongoMessage = messageDoc.message;
 //   });
 // });
- 
- app.get('*', function(req, res) {
-     res.render('index');
- });
-
-app.set('port',process.env.PORT || 3000); // handling non static port variable
-
-app.listen(app.get('port'), ()=> //listen is callback function
-  console.log(`your server is running on port ${app.get('port')}`)
-);

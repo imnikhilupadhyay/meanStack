@@ -4,11 +4,8 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider,$locat
    $locationProvider.html5Mode(true);
    $routeProvider.
    when('/',{
-    templateUrl:'/partials/main',
-    controller:'mainCtrl'
+    templateUrl:'/partials/main/main',
+    controller:'mvMainCtrl'
    })
 }]);
 
-app.controller('mainCtrl',function($scope){
- $scope.myVar='Hello World';
-});
