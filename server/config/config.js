@@ -13,5 +13,4 @@ module.exports={
   db:'mongodb://nikhilDev:multivision1@ds127589.mlab.com:27589/multivision',
   port:process.env.PORT || 80
  }
-
 };

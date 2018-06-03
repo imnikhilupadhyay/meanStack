@@ -7,5 +7,8 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider,$locat
     templateUrl:'/partials/main/main',
     controller:'mvMainCtrl'
    })
+   .otherwise({
+    redirectTo:'/'
+   })
 }]);
 

@@ -17,7 +17,7 @@ var User= mongoose.model('User');
 passport.use(new LocalStrategy(
   (username,password,done)=> {
       User.findOne({username:username}).exec((err,user)=> {
-        if(user){
+        if(user && user.authenticate(password)){
           return done(null,user);
         }else{
           return done(null,false);
@@ -25,6 +25,12 @@ passport.use(new LocalStrategy(
       })
   }
 ));
+
+
+app.use((req,res,next)=> {
+  console.log(req.user);
+  next();
+}); // handles page refresh after login 
 
 passport.serializeUser((user,done)=> {
   if(user){
@@ -41,6 +47,7 @@ passport.deserializeUser((id,done)=> {
       }
     })
 })
+
 
 app.listen(config.port);
   console.log("Listening to "+ config.port +" port!!");
