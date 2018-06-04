@@ -30,5 +30,10 @@ app.use(stylus.middleware(
  }
 ));
 
+// app.use((req,res,next)=> {
+//  console.log(req.user);
+//  next();
+// }); handles page refresh after login 
+
 app.use(express.static(config.rootPath +'/public'));
 }

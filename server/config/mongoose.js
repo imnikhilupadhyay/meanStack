@@ -15,7 +15,8 @@ module.exports= function(config){
   lastName : String,
   username : String,
   salt : String,
-  hashed_pwd: String
+  hashed_pwd: String,
+  roles: [String]
  });
 
 
@@ -32,10 +33,10 @@ module.exports= function(config){
 
     salt= createSalt();
     hash=hasedPwd(salt, 'nikhilU');
-    User.create({firstName:'Nikhil', lastName:'Upadhyay', username:'nikhilU', salt: salt, hashed_pwd:hash});
+    User.create({firstName:'Nikhil', lastName:'Upadhyay', username:'nikhilU', salt: salt, hashed_pwd:hash ,roles:['admin']});
     salt= createSalt();
     hash=hasedPwd(salt, 'nishantU');
-    User.create({firstName:'Nishant', lastName:'Upadhyay', username:'nishantU', salt: salt, hashed_pwd:hash});
+    User.create({firstName:'Nishant', lastName:'Upadhyay', username:'nishantU', salt: salt, hashed_pwd:hash ,roles:[]});
     salt= createSalt();
     hash=hasedPwd(salt, 'Sram');
     User.create({firstName:'Ram', lastName:'Singh', username:'Sram',salt: salt, hashed_pwd:hash});

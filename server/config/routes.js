@@ -1,10 +1,21 @@
 var auth = require('./auth');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+
 
 module.exports = function(app){
 
  // app.get('/partials/:partialPath',(req,res)=> {
   //   res.render('partials/'+ req.params.partialPath)
   // });
+
+
+  app.get('/api/users', auth.requireRole('admin'), (req,res)=> {
+    
+    User.find({}).exec((err,collection)=> {
+      res.send(collection);
+    })
+  });
 
   app.get('/partials/*',(req,res)=> {
    res.render('../../public/app/'+ req.params[0]);
@@ -18,6 +29,8 @@ module.exports = function(app){
   });
   
  app.get('*', function(req, res) {
-  res.render('index');
+  res.render('index',{
+    bootStrappedUser:req.user
+  });
  });
 };

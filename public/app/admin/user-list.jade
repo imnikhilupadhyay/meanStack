@@ -1,0 +1,13 @@
+.container
+  .row
+   .col-md-3
+    input.form-control(type="text" placeholder="search", ng-model="srch")
+  table.table.table-condensed
+   thead
+    tr
+     th Name
+     th Role
+   tbody
+    tr(ng-repeat='user in users | filter:{roles:srch}')
+      td {{user.firstName+" "+user.lastName}}
+      td {{user.roles}}

@@ -22,7 +22,10 @@ html
    script(type="text/javascript", src="/app/account/mvIdentity.js")
    script(type="text/javascript", src="/app/common/mvNotifier.js")
    script(type="text/javascript", src="/app/account/mvAuth.js")
+   script(type="text/javascript", src="/app/account/mvUser.js")
+   script(type="text/javascript", src="/app/admin/mvUserListCtrl.js")
    base(href="/")
 
  body(ng-app='app')
+  include CurrentUser
   block main-content
