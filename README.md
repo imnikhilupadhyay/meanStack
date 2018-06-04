@@ -43,5 +43,5 @@ Heroku Setup
 -heroku config:set NODE-ENV=production --app <appname>
 -git push heroku master
 -heroku ps:scale web=1 --app <appname> // it will allocate some resources to heroku to run
-
+-heroku open --app <appname>
 ```
