@@ -31,6 +31,19 @@ angular.module('app').factory('mvAuth', function($http, mvIdentity, $q, mvUser){
     } else {
         return $q.reject('not an admin !!');
     }
+  },
+  createUser: function(newUserData) {
+    let newUser = new mvUser(newUserData);
+    var q = $q.defer();
+    newUser.$save().then(function() { // resource have $save
+      mvIdentity.currentUser = newUser;
+      q.resolve(true);
+    },
+      function(response){
+        q.reject(response.data.reason);
+      }
+    );
+    return q.promise;
   }
  }
 });

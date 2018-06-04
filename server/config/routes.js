@@ -1,5 +1,6 @@
 var auth = require('./auth');
 var mongoose = require('mongoose');
+var users = require('../controllers/users');
 var User = mongoose.model('User');
 
 
@@ -10,13 +11,9 @@ module.exports = function(app){
   // });
 
 
-  app.get('/api/users', auth.requireRole('admin'), (req,res)=> {
-    
-    User.find({}).exec((err,collection)=> {
-      res.send(collection);
-    })
-  });
-
+  app.get('/api/users', auth.requireRole('admin'), users.getUsers);
+  app.post('/api/users', users.createUser);
+  
   app.get('/partials/*',(req,res)=> {
    res.render('../../public/app/'+ req.params[0]);
  });

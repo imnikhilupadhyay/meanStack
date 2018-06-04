@@ -21,6 +21,10 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider,$locat
      controller:'mvUserListCtrl',
      resolve: routeRoleChecks.admin
    })
+   .when('/signup',{
+     templateUrl:'/partials/account/signup',
+     controller:'mvSignupCtrl'
+   })
 }]);
 
 
