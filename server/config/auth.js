@@ -2,6 +2,7 @@ var passport = require('passport');
 
 
 exports.authenticate = function(req, res, next) {
+  req.body.username = req.body.username.toLowerCase(); // it will make sure even if user login with uppercase
  var auth = passport.authenticate('local', (err,user)=> {
   if(err){
    return next(err);

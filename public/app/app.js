@@ -7,7 +7,12 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider,$locat
      auth: function(mvAuth){
       return mvAuth.authorizeCurrentUserForRoute('admin');
      }
-    }
+    },
+    user: {
+      auth: function(mvAuth){
+       return mvAuth.authorizeAuthenticatedUserForRoute();
+      }
+     }
    }
 
    $locationProvider.html5Mode(true);
@@ -25,6 +30,15 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider,$locat
      templateUrl:'/partials/account/signup',
      controller:'mvSignupCtrl'
    })
+   .when('/profile',{
+    templateUrl:'/partials/account/profile',
+    controller:'mvProfileCtrl',
+    resolve:routeRoleChecks.user
+  })
+   .when('/courses',{
+    templateUrl:'/partials/courses/courses-list',
+    controller:'mvCoursesListCtrl'
+  })
 }]);
 
 

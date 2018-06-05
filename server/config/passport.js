@@ -17,8 +17,6 @@ passport.use(new LocalStrategy(
   }
 ));
 
-
-
 passport.serializeUser((user,done)=> {
   if(user){
     return done(null,user._id);

@@ -44,6 +44,25 @@ angular.module('app').factory('mvAuth', function($http, mvIdentity, $q, mvUser){
       }
     );
     return q.promise;
+  },
+  authorizeAuthenticatedUserForRoute: function() {
+    if(mvIdentity.isAuthenticated()) {
+      return true;
+    } else {
+        return $q.reject('not authenticated !!');
+    }
+  },
+  updateCurrentUser: function(newUserData) {
+    var q = $q.defer();
+    var clone = angular.copy(mvIdentity.currentUser);
+    angular.extend(clone,newUserData);
+    clone.$update().then(function(){
+      mvIdentity.currentUser = clone;
+      q.resolve();
+    }, function(reason){
+      q.reject(reason);
+    });
+    return q.promise;
   }
  }
 });

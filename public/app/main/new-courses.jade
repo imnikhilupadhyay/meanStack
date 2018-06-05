@@ -3,4 +3,4 @@
  .panel-body
   .row(ng-repeat="course in courses | orderBy:'published':true | limitTo:6")
    .col-md-3 {{course.published | date:'MMM dd'}}
-   .col-md-9 {{course.name}}
+   .col-md-9 {{course.title}}
