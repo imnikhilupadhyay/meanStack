@@ -39,3 +39,27 @@ footer p {
 div input[type=text]:focus {
   width: 150%;
 }
+mark {
+  color: #fff;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding: 4px;
+  background-color: #808080;
+}
+.open {
+  padding-right: 15px;
+  padding-left: 15px;
+  background-color: #32cd32;
+}
+.booked {
+  background-color: #f00;
+}
+.closed {
+  background-color: #808080;
+}
+.strong {
+  font-weight: bold;
+  padding-bottom: 2px;
+}

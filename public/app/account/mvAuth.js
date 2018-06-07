@@ -25,7 +25,7 @@ angular.module('app').factory('mvAuth', function($http, mvIdentity, $q, mvUser){
     });
     return q.promise;
   },
-  authorizeCurrentUserForRoute: function(role) {
+  authorizeAdminForRoute: function(role) {
     if(mvIdentity.isAuthorized(role)){
       return true;
     } else {
@@ -45,16 +45,23 @@ angular.module('app').factory('mvAuth', function($http, mvIdentity, $q, mvUser){
     );
     return q.promise;
   },
-  authorizeAuthenticatedUserForRoute: function() {
+  authorizeAuthenticatedAllForRoute: function(role) {
     if(mvIdentity.isAuthenticated()) {
       return true;
     } else {
         return $q.reject('not authenticated !!');
     }
   },
+  authorizeAuthenticatedUserForRoute: function(role) {
+    if(mvIdentity.isAuthorized()) {
+      return true;
+    } else {
+      return $q.reject('not authenticated !!');
+    }
+  },
   updateCurrentUser: function(newUserData) {
     var q = $q.defer();
-    var clone = angular.copy(mvIdentity.currentUser);
+    let clone = angular.copy(mvIdentity.currentUser);
     angular.extend(clone,newUserData);
     clone.$update().then(function(){
       mvIdentity.currentUser = clone;

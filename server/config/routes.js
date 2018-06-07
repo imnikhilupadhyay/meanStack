@@ -15,6 +15,7 @@ module.exports = function(app){
   app.post('/api/users', users.createUser);
   app.put('/api/users',users.updateUser);
   app.get('/api/courses', courses.getCourses);
+  app.get('/api/courses/:id', courses.getCoursesById);
   app.get('/partials/*',(req,res)=> {
    res.render('../../public/app/'+ req.params[0]);
   });

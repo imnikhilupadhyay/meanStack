@@ -10,8 +10,17 @@
       tr
         th Title
         th Publish Date
+        th End Date
+        th Status
     tbody
       tr(ng-repeat="course in courses | filter:searchText | orderBy:sortOrder")
-        td
+        td(ng-show="course.status.toLowerCase() === 'open'")
           a(href="/courses/{{course._id}}") {{course.title}}
+        td(ng-show="course.status.toLowerCase() === 'booked'")
+          a(href="#") {{course.title}}
         td {{course.published | date}}
+        td {{course.endDate | date}}
+        td(ng-show="course.status.toLowerCase() === 'open'")
+         mark.open {{course.status | uppercase}}
+        td(ng-show="course.status.toLowerCase() === 'booked'")
+         mark.booked {{course.status | uppercase}}

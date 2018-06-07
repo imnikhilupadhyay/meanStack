@@ -5,13 +5,18 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider,$locat
    var routeRoleChecks = {
     admin: {
      auth: function(mvAuth){
-      return mvAuth.authorizeCurrentUserForRoute('admin');
+      return mvAuth.authorizeAdminForRoute('admin');
      }
     },
-    user: {
+    all: {
       auth: function(mvAuth){
-       return mvAuth.authorizeAuthenticatedUserForRoute();
+       return mvAuth.authorizeAuthenticatedAllForRoute();
       }
+     },
+     user: {
+       auth: function(mvAuth){
+         return mvAuth.authorizeAuthenticatedUserForRoute('user,admin');
+       }
      }
    }
 
@@ -33,19 +38,25 @@ app.config(['$routeProvider','$locationProvider', function($routeProvider,$locat
    .when('/profile',{
     templateUrl:'/partials/account/profile',
     controller:'mvProfileCtrl',
-    resolve:routeRoleChecks.user
+    resolve:routeRoleChecks.all
   })
    .when('/courses',{
     templateUrl:'/partials/courses/courses-list',
-    controller:'mvCoursesListCtrl'
+    controller:'mvCoursesListCtrl',
+    resolve: routeRoleChecks.user
+  })
+  .when('/courses/:id',{
+    templateUrl:'/partials/courses/courses-details',
+    controller:'mvCoursesDetailCtrl',
+    resolve: routeRoleChecks.user
   })
 }]);
 
 
 angular.module('app').run(function($rootScope, $location) {
  $rootScope.$on('$routeChangeError', function(evt, current, previous, rejection){
-    if(rejection === 'not an admin !!'){
+    if(rejection === 'not an admin !!' || rejection === 'not authenticated !!'){
      $location.path('/');
     }
  })
-});
+}); // rootScope is used to listin route changer events

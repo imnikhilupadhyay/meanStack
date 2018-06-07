@@ -1,6 +1,9 @@
 .panel.panel-primary
- .panel-heading.text-center New Courses
+ .panel-heading.text-center Upcoming Events
  .panel-body
+  .row
+   .col-md-3.strong Starts On
+   .col-md-9.strong Event's Name 
   .row(ng-repeat="course in courses | orderBy:'published':true | limitTo:6")
    .col-md-3 {{course.published | date:'MMM dd'}}
    .col-md-9 {{course.title}}

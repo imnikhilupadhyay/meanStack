@@ -1,7 +1,7 @@
 angular.module('app').controller('mvSignupCtrl', function($scope,mvNotifier,$location, mvAuth, mvUser){
 
   $scope.roleSelect = [
-    {value:'admin', text:'As Admin'},
+    {value:'event', text:'As Event Organiser'},
     {value:'user', text:'As Participant'},
     {value:'volunteer', text:'As Volunteer'}
    ];
@@ -18,7 +18,7 @@ angular.module('app').controller('mvSignupCtrl', function($scope,mvNotifier,$loc
   };
 
   mvAuth.createUser(newUserData).then(function(){
-   mvNotifier.notify("User created !!");
+   mvNotifier.notify("Welcome Home !!");
    $location.path('/');
   },
    function(reason){

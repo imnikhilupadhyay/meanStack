@@ -6,3 +6,9 @@ exports.getCourses = function(req,res) {
   res.send(collection);
  })
 };
+
+exports.getCoursesById = function(req,res){
+ Course.findOne({_id:req.params.id}).exec((err,course)=> {
+  res.send(course);
+ })
+};

@@ -1,6 +1,9 @@
 .panel.panel-primary
- .panel-heading.text-center Featured Courses
- .panel-body 
+ .panel-heading.text-center Today's Live Events
+ .panel-body
+  .row
+   .col-md-9.strong Event's Name
+   .col-md-3.text-right.strong Status 
   .row(ng-repeat="course in courses | filter:{featured:true}")
    .col-md-9 {{course.title}}
    .col-md-3.text-right {{course.status}}
